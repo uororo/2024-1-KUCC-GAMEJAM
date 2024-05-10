@@ -2,28 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UI; // UI 버튼을 사용하기 위해 추가
 
 public class DialogueManager : MonoBehaviour
 {
-    public TextMeshProUGUI dialogueText; // 대화를 표시할 TextMeshProUGUI
+    public TextMeshProUGUI dialogueText;
+    public string[] sentences;
     public GameObject[] choiceButtons; // 선택지 버튼 배열
-    private List<string> sentences; // 대화 내용을 저장할 리스트
-    private int index; // 현재 표시할 문장의 인덱스
-    public float typingSpeed = 0.02f; // 글자가 표시되는 속도
+    private int index;
+    public float typingSpeed = 0.02f;
+
+    private int choicePoint = 3; // 선택지를 표시할 대화의 인덱스, 예를 들어 4번째 대화 후 선택지 표시
+    private Dictionary<int, string[]> choiceSentences; // 선택지에 따른 대화문
 
     private void Start()
     {
-        sentences = new List<string>();
         index = 0;
-        SetupChoices(false); // 처음에는 선택지를 숨깁니다.
+        InitializeChoices();
+        StartDialogue();
+        SetupChoiceButtons(false); // 시작 시 모든 선택지 버튼을 비활성화
     }
 
-    public void StartDialogue(string[] dialogueLines)
+    void InitializeChoices()
     {
-        sentences.Clear();
-        sentences.AddRange(dialogueLines);
-        index = 0;
+        choiceSentences = new Dictionary<int, string[]>();
+        choiceSentences.Add(0, new string[] { "1번째 선택지 테스트", "1번 선택지 다음 대화문 테스트" });
+        choiceSentences.Add(1, new string[] { "2번째 선택지 테스트", "2번 선택지 다음 대화문 테스트" });
+        choiceSentences.Add(2, new string[] { "3번째 선택지 테스트", "3번 선택지 다음 대화문 테스트" });
+    }
+
+    void StartDialogue()
+    {
         StartCoroutine(TypeSentence(sentences[index]));
     }
 
@@ -39,70 +48,48 @@ public class DialogueManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && dialogueText.text == sentences[index] && !AnyChoiceActive())
+        if (Input.GetMouseButtonDown(0) && dialogueText.text == sentences[index])
         {
-            NextSentence();
-        }
-    }
-
-    void NextSentence()
-    {
-        if (index < sentences.Count - 1)
-        {
-            index++;
-            if (ShouldShowChoices(index))
+            if (index == choicePoint)
             {
-                SetupChoices(true); // 선택지 표시
+                SetupChoiceButtons(true); // 선택지 표시
             }
             else
             {
-                StartCoroutine(TypeSentence(sentences[index]));
+                NextSentence();
             }
         }
-        else
-        {
-            dialogueText.text = "";
-            // 대화 종료
-        }
     }
 
-    bool ShouldShowChoices(int sentenceIndex)
-    {
-        if (sentenceIndex == 4) return true;
-        return false; // 기본적으로 false 반환
-    }
-
-    void SetupChoices(bool show)
+    void SetupChoiceButtons(bool isActive)
     {
         foreach (GameObject button in choiceButtons)
         {
-            button.SetActive(show);
+            button.SetActive(isActive);
         }
     }
 
     public void MakeChoice(int choiceIndex)
     {
-        SetupChoices(false);
-        
-        if (choiceIndex == 0)
+        SetupChoiceButtons(false);
+        if (choiceSentences.ContainsKey(choiceIndex))
         {
-            StartDialogue(new string[] { "감히 날 골라?", "여기까지 0번 선택지" });
+            sentences = choiceSentences[choiceIndex]; // 선택에 따라 새로운 대화문 배열을 로드
+            index = 0; // 새로운 대화문의 시작
+            StartDialogue();
         }
-        else if (choiceIndex == 1)
-        {
-            StartDialogue(new string[] { "안녕 나는 1번 선택지야", "테스트 끝" });
-        }
-        // 선택에 따른 다음 대화 줄을 설정합니다.
-        // 예: if (choiceIndex == 0) { StartDialogue(new string[] { "Yes, you chose A.", "More text..." }); }
-        // 이외 다른 선택지에 대한 처리
     }
 
-    bool AnyChoiceActive()
+    void NextSentence()
     {
-        foreach (GameObject button in choiceButtons)
+        if (index < sentences.Length - 1)
         {
-            if (button.activeSelf) return true;
+            index++;
+            StartCoroutine(TypeSentence(sentences[index]));
         }
-        return false;
+        else
+        {
+            dialogueText.text = ""; // 모든 대화를 표시했다면 비움
+        }
     }
 }
