@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Day7Dialogue : MonoBehaviour, IDayDialogue
@@ -50,5 +51,18 @@ public class Day7Dialogue : MonoBehaviour, IDayDialogue
             var effect = choiceEffects[choiceIndex];
             GameManager.Instance.AdjustScore(effect.isPlayer, effect.points);
         }
+    }
+    public void UpdateChoiceTexts()
+    {
+        GameObject choiceOne = GameObject.Find("choiceOne");
+        GameObject choiceTwo = GameObject.Find("choiceTwo");
+        GameObject choiceThree = GameObject.Find("choiceThree");
+
+        if (choiceOne != null)
+            choiceOne.GetComponentInChildren<TextMeshProUGUI>().text = "귀요미를 맡고있는 민서입니다~~~";
+        if (choiceTwo != null)
+            choiceTwo.GetComponentInChildren<TextMeshProUGUI>().text = "예비! 과대!를 맡고있는 민서입니다~~~";
+        if (choiceThree != null)
+            choiceThree.GetComponentInChildren<TextMeshProUGUI>().text = "비주얼을 담당하고있는 민서입니다~~~";
     }
 }

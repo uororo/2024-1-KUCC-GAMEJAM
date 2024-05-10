@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
         else
         {
             opponentScore += amount;
-            rivalCount.text = "»ó´ë¹æ ´ç¼±°¡´É¼º: " + opponentScore.ToString();
+            rivalCount.text = "±èºÀÆÈ ´ç¼±°¡´É¼º: " + opponentScore.ToString();
         }
     }
 }
