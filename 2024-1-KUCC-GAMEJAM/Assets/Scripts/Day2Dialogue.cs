@@ -12,15 +12,15 @@ public class Day2Dialogue : MonoBehaviour, IDayDialogue
     private int choicePoint = 4;
     private Dictionary<int, string[]> choiceSentences = new Dictionary<int, string[]>
     {
-        { 0, new string[] { "이광칠: \"얘, 역시 너밖에 없다! 너 정말 좋은 친구구나!\n교우들이 우정을 저버리지 않는 내모습을 보고 좋은 인상을 가지게 되었다. 나를 향한 표심이 30 올라갔다. 야호\"",
+        { 0, new string[] { "이광칠: \"얘, 역시 너밖에 없다! 너 정말 좋은 친구구나!\"\n교우들이 우정을 저버리지 않는 내모습을 보고 좋은 인상을 가지게 되었다. 나를 향한 표심이 40 올라갔다. 야호",
             "소외되는 친구 없이 오늘도 신나게 놀아제낀 나는 자취방에 와서 쿨쿨 잠들었다." } },
-        { 1, new string[] { "김봉팔: \"그래~ 민서는 많이 피곤한가봐~ 나는 첫차까지도 된다고? 어디 한번 광란의 밤을 보내볼까?\n교우들이 나는 안중에도 없이 봉팔이와 끝내주게 놀았다. 라이벌의 표심이 80만큼 올라갔다.\"",
+        { 1, new string[] { "김봉팔: \"그래~ 민서는 많이 피곤한가봐~ 나는 첫차까지도 된다고? 어디 한번 광란의 밤을 보내볼까?\"\n교우들이 나는 안중에도 없이 봉팔이와 끝내주게 놀았다. 라이벌의 표심이 60만큼 올라갔다.",
             "친구들이 봉팔이만 좋아하는 모습에 열등감을 느낀 민서는 질투심에 빠져 씩씩대다가 잠이 들었다." } }
     };
     private Dictionary<int, (bool isPlayer, int points)> choiceEffects = new Dictionary<int, (bool, int)>
     {
-        { 0, (true, 30) },
-        { 1, (false, 80) }
+        { 0, (true, 40) },
+        { 1, (false, 60) }
     };
 
     public void StartDialogue()

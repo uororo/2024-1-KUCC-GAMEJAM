@@ -5,8 +5,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    private int playerScore = 0;
-    private int opponentScore = 100;
+    public int playerScore = 0;
+    public int opponentScore = 100;
 
     public TextMeshProUGUI playerCount;
     public TextMeshProUGUI rivalCount;

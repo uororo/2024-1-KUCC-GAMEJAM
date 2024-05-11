@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
@@ -19,9 +20,12 @@ public class DialogueManager : MonoBehaviour
     private string[] sentences; // 현재 대화 내용
     private int choicePoint; // 선택지를 표시할 대화의 인덱스
     private Dictionary<int, string[]> choiceSentences; // 선택지에 따른 대화문
-    private int currentDay = 1; // 현재 일자
+    public int currentDay = 1; // 현재 일자
 
     public FadeManager fadeManager;
+    private bool isWin = false;
+
+    public BackGroundManager backGroundManager;
 
     void Start()
     {
@@ -171,6 +175,7 @@ public class DialogueManager : MonoBehaviour
     IEnumerator EndDayRoutine(int nextDay)
     {
         yield return StartCoroutine(fadeManager.FadeIn());
+        backGroundManager.ChangeBackground(nextDay - 1);
         fadeManager.dayText.text = "Day " + nextDay;
         fadeManager.dayText.gameObject.SetActive(true);
         yield return new WaitForSeconds(2.0f);
@@ -178,6 +183,18 @@ public class DialogueManager : MonoBehaviour
         yield return StartCoroutine(fadeManager.FadeOut());
 
         currentDay = nextDay;
+
+        if (currentDay == 7)
+        {
+            if (GameManager.Instance.playerScore < GameManager.Instance.opponentScore)
+                isWin = false;
+            else
+                isWin = true;
+            if (isWin)
+                SceneManager.LoadScene("Ending_Scene_Win");
+            else
+                SceneManager.LoadScene("Ending_Scene_Lose");
+        }
         LoadDayDialogue(currentDay);
     }
 }

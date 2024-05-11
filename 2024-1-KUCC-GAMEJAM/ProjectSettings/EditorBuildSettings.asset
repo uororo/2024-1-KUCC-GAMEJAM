@@ -6,6 +6,24 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/mainmenu.unity
+    guid: 553493b128cd4a8478e5cd0fb2775a76
+  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Ending_Scene_Lose.unity
+    guid: 672745ad0a7030b44b5549301caf7744
+  - enabled: 1
+    path: Assets/Scenes/Ending_Scene_Win.unity
+    guid: 1f5a846c0a955e346be0b777444dd60f
+  - enabled: 1
+    path: Assets/Scenes/Happy_ending.unity
+    guid: 3df1a9644cf04354486aa08177f19162
+  - enabled: 1
+    path: Assets/Scenes/Sad_Ending_Late.unity
+    guid: 8a891fd2ab6f1924b81e29d27e752a5c
+  - enabled: 1
+    path: Assets/Scenes/Sad_Ending_Lose.unity
+    guid: dc36c4b7f6b7557488fb667d8793d220
   m_configObjects: {}
